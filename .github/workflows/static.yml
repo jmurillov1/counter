@@ -37,7 +37,7 @@ jobs:
     - name: Archive Production Artifact
       uses: actions/upload-artifact@master
       with:
-        name: web-build
+        name: github-pages
         path: build/web
   deploy:
     environment:
@@ -53,13 +53,13 @@ jobs:
       - name: Download artifact
         uses: actions/download-artifact@v1
         with:
-          name: web-build
-          path: web-build
+          name: github-pages
+          path: github-pages
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
         with:
           # Upload entire repository
-          path: web-build
+          path: github-pages
       - name: View Data
         run: ls -la
       - name: Deploy to GitHub Pages
