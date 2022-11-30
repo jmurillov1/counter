@@ -55,11 +55,13 @@ jobs:
         with:
           name: web-build
           path: web-build
+      - name: View data
+        run: ls -la
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
         with:
           # Upload entire repository
-          path: '.'
+          path: web-build
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v1
