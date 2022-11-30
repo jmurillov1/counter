@@ -33,11 +33,11 @@ jobs:
           channel: 'stable'
     - run: flutter pub get
     - run: flutter config --enable-web
-    - run: flutter build web
+    - run: flutter build web --base-href /${{github.event.repository.name}}/
     - name: Archive Production Artifact
       uses: actions/upload-artifact@master
       with:
-        name: github-pages
+        name: web-build
         path: build/web
   deploy:
     environment:
@@ -53,15 +53,19 @@ jobs:
       - name: Download artifact
         uses: actions/download-artifact@v1
         with:
-          name: github-pages
-          path: github-pages
+          name: web-build
+          path: web-build
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
         with:
           # Upload entire repository
-          path: github-pages
+          path: web-build
       - name: View Data
         run: ls -la
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v1
+       # delete-artifact
+      - uses: geekyeggo/delete-artifact@v2
+        with:
+          name: web-build
